@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin = "anonymous"></script>
+</head>
+<body>
+    <h1>Hello World!</h1>
+    <h2>Welcome to FlaskApp!</h2>
+    <form id = "networkcheck" role = "form">
+        <div class="row">
+          <nhvb class="col">
+            <input name="rpcnetwork" type="text" class="form-control" placeholder="RPC network">
+          </div>
+          <div class="col">
+            <input name="chainid" type="text" class="form-control" placeholder="chainID">
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+              <input name="rpcnetwork" type="text" class="form-control" placeholder="RPC network">
+            </div>
+            <div class="col">
+              <input name="chainid" type="text" class="form-control" placeholder="chainID">
+            </div>
+          </div>
+        
+          <div class="row">
+            <div class="col">
+              <input name="rpcnetwork" type="text" class="form-control" placeholder="RPC network">
+            </div>
+            <div class="col">
+              <input name="chainid" type="text" class="form-control" placeholder="chainID">
+            </div>
+          </div>
+        <button id = "checknetwork"> check </button>
+
+      </form>
+      <p id="result"></p>
+      <script type = text/javascript> 
+        //Root stuff
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    
+            //Root so we can get the data from our form
+            $('button#checknetwork').click(function(e) {
+                //Prevent our form from submitting, which is its default action/purpose
+                e.preventDefault();
+                //Get the data from our function in the Flask App
+                $.getJSON($SCRIPT_ROOT + '/checknetwork', {
+                    //Our searchName variable will be the one from our HTML input box
+                    rpcnetwork: $('input[name = "rpcnetwork"]').val(),
+                    chainid: $('input[name = "chainid"]').val(),
+                }, function(data) {
+                    //Rename the variable so I can reuse some code 
+                    data_list = data.dataList;
+
+                    
+                    //Attach the table to the HTML doc when finished
+                    s= document.getElementById("result");
+                    s.innerHTML = data_list;
+                    console.log(data_list)
+                });
+            }); 
+    
+        </script>
+
+
+
+</body>
+</html>
